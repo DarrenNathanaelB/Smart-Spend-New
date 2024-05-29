@@ -23,7 +23,7 @@ function Register() {
             const response = await axios.post('/register', { username, password });
             if (response.status === 201) {
                 localStorage.setItem('isLoggedIn', 'true');
-                navigate('/');
+                navigate('/login');
             } else {
                 setError(response.data.error || 'Registration failed. Please try again.');
             }

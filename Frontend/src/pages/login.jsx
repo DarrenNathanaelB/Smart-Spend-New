@@ -24,7 +24,7 @@ function Login() {
             console.error('Error logging in:', error);
             setError('An error occurred. Please try again.');
         }
-    };    
+    };
 
     return (
         <div className="bg-gradient-to-r from-indigo-800 to-purple-900 min-h-screen flex items-center justify-center">

@@ -18,7 +18,6 @@ function Home() {
     }, []);
 
     const checkLoginStatus = () => {
-        // Assuming you store login status in local storage or cookies
         const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
         setIsLoggedIn(loggedInStatus);
     };
