@@ -65,6 +65,7 @@ function Home() {
                         <div>
                             <div className="text-sm text-white font-bold mb-1">{expense.title}</div>
                             <p className="text-sm text-gray-400">Description: {expense.description}</p>
+                            <p className="text-sm text-gray-400">Categories: {expense.categories}</p>
                             <p className="text-sm text-gray-400">Date: {expense.date}</p>
                             <p className="text-sm text-gray-400">Amount: Rp.{expense.amount}</p>
                             <div className="flex justify-between mt-2">
