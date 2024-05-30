@@ -15,11 +15,14 @@ function Home() {
         checkLoginStatus();
         fetchExpenses();
         fetchTotalExpense();
-    }, []);
+    }, [selectedCategory]);
 
     const checkLoginStatus = () => {
         const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
         setIsLoggedIn(loggedInStatus);
+        if (!loggedInStatus) {
+            navigate('/login');
+        }
     };
 
     const fetchExpenses = async () => {
@@ -48,18 +51,15 @@ function Home() {
         try {
             await axios.delete(`/deleteExpense/${id}`);
             setExpenses(expenses.filter(expense => expense._id !== id));
+            // Re-fetch the total expense after deleting
+            fetchTotalExpense();
         } catch (error) {
             console.error('Error deleting expense:', error);
         }
     };
 
-    const handleMarkAsDone = async (id) => {
-        try {
-            await deleteExpense(id);
-            window.location.reload();
-        } catch (error) {
-            console.error('Error marking expense as done:', error);
-        }
+    const handleMarkAsDone = (id) => {
+        deleteExpense(id);
     };
 
     const handleLogout = () => {
@@ -111,13 +111,12 @@ function Home() {
                     <div key={expense._id} className="bg-gray-800 rounded-lg p-4 transition duration-300 ease-in-out transform hover:bg-gray-700 hover:scale-105">
                         <div>
                             <div className="text-sm text-white font-bold mb-1">{expense.title}</div>
-                            <p className="text-sm text-gray-400">Description: {expense.description}</p>
-                            <p className="text-sm text-gray-400">Categories: {expense.categories}</p>
                             <p className="text-sm text-gray-400">Date: {expense.date}</p>
                             <p className="text-sm text-gray-400">Amount: Rp.{expense.amount}</p>
                             <div className="flex justify-between mt-2">
                                 <button onClick={() => handleMarkAsDone(expense._id)} className="bg-blue-500 text-white px-4 py-2 rounded-lg">Delete</button>
                                 <Link to={`/updateExpense/${expense._id}`} className="bg-green-500 text-white px-4 py-2 rounded-lg">Update</Link>
+                                <Link to={`/viewExpense/${expense._id}`} className="bg-yellow-500 text-white px-4 py-2 rounded-lg">View</Link>
                             </div>
                         </div>
                     </div>

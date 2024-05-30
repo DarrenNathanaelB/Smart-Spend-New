@@ -7,8 +7,16 @@ const AddExpense = () => {
     const [title, setTitle] = useState('');
     const [amount, setAmount] = useState('');
     const [description, setDescription] = useState('');
-    const [categories, setCategories] = useState('');
+    const [category, setCategory] = useState('');
     const [date, setDate] = useState('');
+
+    const categories = [
+        'Makan',
+        'Kuliah',
+        'Hiburan',
+        'Transportasi',
+        'Perlengkapan'
+    ];
 
     const handleAddExpense = async () => {
         try {
@@ -16,7 +24,7 @@ const AddExpense = () => {
                 title: title,
                 amount: amount,
                 description: description,
-                categories: categories,
+                categories: category,
                 date: date,
             };
             await axios.post('/addExpense', newExpense);
@@ -61,14 +69,20 @@ const AddExpense = () => {
                         />
                     </div>
                     <div className="mb-4">
-                        <label htmlFor="categories" className="text-white font-bold">Categories</label>
-                        <input
-                            type="text"
-                            id="categories"
-                            value={categories}
-                            onChange={(e) => setCategories(e.target.value)}
+                        <label htmlFor="category" className="text-white font-bold">Category</label>
+                        <select
+                            id="category"
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
                             className="w-full px-3 py-2 rounded-lg bg-gray-700 text-white"
-                        />
+                        >
+                            <option value="">Select Category</option>
+                            {categories.map((cat) => (
+                                <option key={cat} value={cat}>
+                                    {cat}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <div className="mb-4">
                         <label htmlFor="date" className="text-white font-bold">Date</label>
